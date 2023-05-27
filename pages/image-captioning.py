@@ -35,15 +35,13 @@ model2 = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can ch
 
 st.title("Image Captioning App")
 # define the layout of your app
-uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
-
 model = st.selectbox("Select a Model", ["Hugging-Face", "Github"])
 time.sleep(5)
+uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-submit_button = st.button("Compute")
 
 if model == "Hugging-Face":
-    if uploaded_file is not None and submit_button :
+    if uploaded_file is not None:
         # Load the uploaded image
         image = Image.open(uploaded_file).convert('RGB')
         # Use the pre-trained model to generate a caption for the uploaded image
@@ -66,7 +64,7 @@ if model == "Hugging-Face":
       st.error('Error , Plz..... press Compute', icon="🚨")
 
 elif model == "Github":
-    if uploaded_file is not None and submit_button :
+    if uploaded_file is not None :
         # Load the uploaded image
         im = Image.open(uploaded_file)
         # Preprocess the input image
