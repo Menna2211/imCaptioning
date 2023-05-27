@@ -35,35 +35,34 @@ model2 = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can ch
 
 st.title("Image Captioning App")
 # define the layout of your app
+uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+submit_button = st.button("Compute")
+
 model = st.selectbox("Select a Model", ["Hugging-Face", "Github"])
 time.sleep(2)
-
 if model == "Hugging-Face":
-    uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
-    submit_button = st.button("Compute")
-    if uploaded_file is not None:
-        if submit_button :
-            # Load the uploaded image
-            image = Image.open(uploaded_file).convert('RGB')
-            # Use the pre-trained model to generate a caption for the uploaded image
-            progress_text = "Operation in progress. Please wait."
-            bar = st.progress(0, text=progress_text)
-            for percent_complete in range(100):
-                inputs = processor(image, return_tensors="pt")
-                out = model1.generate(**inputs)
-                time.sleep(0.1)
-                bar.progress(percent_complete + 1, text=progress_text)
-                
-            # Display the uploaded image and its generated caption
-            st.image(image)
-            st.write("Generated Caption:")
-            st.write(processor.decode(out[0], skip_special_tokens=True))
-            time.sleep(5)
-            st.success('Congratulations task is done ', icon="✅")
-            st.balloons()
-        else:
-          st.error('Error , Plz..... press Compute', icon="🚨")
-    
+    if uploaded_file is not None and submit_button :
+        # Load the uploaded image
+        image = Image.open(uploaded_file).convert('RGB')
+        # Use the pre-trained model to generate a caption for the uploaded image
+        progress_text = "Operation in progress. Please wait."
+        bar = st.progress(0, text=progress_text)
+        for percent_complete in range(100):
+            inputs = processor(image, return_tensors="pt")
+            out = model1.generate(**inputs)
+            time.sleep(0.1)
+            bar.progress(percent_complete + 1, text=progress_text)
+
+        # Display the uploaded image and its generated caption
+        st.image(image)
+        st.write("Generated Caption:")
+        st.write(processor.decode(out[0], skip_special_tokens=True))
+        time.sleep(5)
+        st.success('Congratulations task is done ', icon="✅")
+        st.balloons()
+    else:
+      st.error('Error , Plz..... press Compute', icon="🚨")
+
 elif model == "Github":
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
     submit_button = st.button("Compute")
