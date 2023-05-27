@@ -14,9 +14,5 @@ st.markdown(
     The application allows users to upload an image and generate a descriptive caption for the image Using:
     - Hugging Face Model: [blip-image-captioning-base](https://huggingface.co/Salesforce/blip-image-captioning-base)
     - Github model: [CATR](https://github.com/saahiluppal/catr)
-    ### Stable Diffusion:
-    The application allows users to input a piece of text and generate an image that is related to the input text. 
-    - Hugging Face Model: [blip-image-captioning-base](https://huggingface.co/Salesforce/blip-image-captioning-base)
-    - Github model: [community forums](https://discuss.streamlit.io)
 """
 )
