@@ -1,4 +1,3 @@
-
 from transformers import BertTokenizer
 import torch
 import time
@@ -43,7 +42,8 @@ if uploaded_file is not None and submit_button :
             mean=[0.485, 0.456, 0.406],
             std=[0.229, 0.224, 0.225])])
     image = transform(im).unsqueeze(0)  # Add a batch dimension
-    #@torch.no_grad()
+    
+    @torch.no_grad()
     def evaluate():
         for i in range(128-1):
             predictions = model(image, caption, cap_mask)
