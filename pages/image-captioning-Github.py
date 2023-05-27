@@ -26,6 +26,8 @@ def get_model():
     model = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can choose between v1, v2 and v3
     return  model
 
+model =get_model()
+
 st.title("Image Captioning App")
 # define the layout of your app
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
@@ -43,7 +45,7 @@ if uploaded_file is not None and submit_button :
             std=[0.229, 0.224, 0.225])])
     image = transform(im).unsqueeze(0)  # Add a batch dimension
     
-    @torch.no_grad()
+    #@torch.no_grad()
     def evaluate():
         for i in range(128-1):
             predictions = model(image, caption, cap_mask)
