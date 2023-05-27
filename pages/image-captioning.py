@@ -26,28 +26,21 @@ caption, cap_mask = create_caption_and_mask(start_token, 128)
 
 # Model 1
 #@st.cache(allow_output_mutation=True)
-def model1():
-    processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
-    model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
-    return processor, model
-
+processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+model1 = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
 # Model 2 
-def model2():
-    model = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can choose between v1, v2 and v3
-    return model
-
+model2 = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can choose between v1, v2 and v3
 
 
 st.title("Image Captioning App")
 # define the layout of your app
-model = st.selectbox("Choose a model", ["Hugging-Face", "Github"])
-time.sleep(5)
+model = st.selectbox("Select a Model", ["Hugging-Face", "Github"])
+time.sleep(2)
 
 if model == "Hugging-Face":
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
     submit_button = st.button("Compute")
-    processor, model =model1()
     if uploaded_file is not None:
         if submit_button :
             # Load the uploaded image
@@ -57,7 +50,7 @@ if model == "Hugging-Face":
             bar = st.progress(0, text=progress_text)
             for percent_complete in range(100):
                 inputs = processor(image, return_tensors="pt")
-                out = model.generate(**inputs)
+                out = model1.generate(**inputs)
                 time.sleep(0.1)
                 bar.progress(percent_complete + 1, text=progress_text)
                 
@@ -74,7 +67,6 @@ if model == "Hugging-Face":
 elif model == "Github":
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
     submit_button = st.button("Compute")
-    model =model2()
     if uploaded_file is not None:
         if submit_button :
             # Load the uploaded image
@@ -92,9 +84,8 @@ elif model == "Github":
 
             @torch.no_grad()
             def evaluate():
-                model.eval()
                 for i in range(128-1):
-                    predictions = model(image, caption, cap_mask)
+                    predictions = model2(image, caption, cap_mask)
                     predictions = predictions[:, i, :]
                     predicted_id = torch.argmax(predictions, axis=-1)
 
