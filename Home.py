@@ -5,11 +5,11 @@ st.set_page_config(
     page_icon="👋",
 )
 
-st.title("Welcome to My TXImg! 👋")
+st.title("Welcome to My ImgCaptioning! 👋")
 
 st.markdown(
     """
-    TXImg is an open-source app built specifically for Image Captioning and Stable Diffusion projects.
+    ImgCaptioning is an open-source app built specifically for Image Captioning projects.
     ### Image Caption:
     The application allows users to upload an image and generate a descriptive caption for the image Using:
     - Hugging Face Model: [blip-image-captioning-base](https://huggingface.co/Salesforce/blip-image-captioning-base)
