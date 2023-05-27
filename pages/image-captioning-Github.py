@@ -46,7 +46,7 @@ if uploaded_file is not None and submit_button :
     #@torch.no_grad()
     def evaluate():
         for i in range(128-1):
-            predictions = model2(image, caption, cap_mask)
+            predictions = model(image, caption, cap_mask)
             predictions = predictions[:, i, :]
             predicted_id = torch.argmax(predictions, axis=-1)
             if predicted_id[0] == 102:
