@@ -41,10 +41,8 @@ st.title("Image Captioning App")
 # define the layout of your app
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 model = st.selectbox("Select a Model", ["Select a Model","Hugging-Face", "Github"])
-if model == "Select a Model":
-  st.stop()
 submit_button = st.button("Compute")
-if not submit_button:
+if model == "Select a Model and not submit_button :
   st.stop()
 
 if model == "Hugging-Face":
