@@ -44,6 +44,8 @@ model = st.selectbox("Select a Model", ["Select a Model","Hugging-Face", "Github
 submit_button = st.button("Compute")
 if model == "Select a Model" and not submit_button :
   st.stop()
+elif model == "Select a Model" and  submit_button :
+  st.warning('Warning.....!!,Plz..... Select a Model ', icon="⚠️")
 
 if model == "Hugging-Face":
     if uploaded_file is not None :
