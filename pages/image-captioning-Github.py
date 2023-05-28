@@ -21,7 +21,7 @@ def create_caption_and_mask(start_token, max_length):
 caption, cap_mask = create_caption_and_mask(start_token, 128)
 
 # Model 2 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource(show_spinner=False ,ttl=3600) 
 def get_model():
     model = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can choose between v1, v2 and v3
     return  model
@@ -32,8 +32,12 @@ st.title("Image Captioning App")
 # define the layout of your app
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 submit_button = st.button("Compute")
-
-if uploaded_file is not None and submit_button :
+if not submit_button:
+  time.sleep(3)
+  st.warning('Please Press Compute....')
+  st.stop()
+    
+if uploaded_file is not None :
     # Load the uploaded image
     im = Image.open(uploaded_file)
     # Preprocess the input image
@@ -44,7 +48,7 @@ if uploaded_file is not None and submit_button :
             mean=[0.485, 0.456, 0.406],
             std=[0.229, 0.224, 0.225])])
     image = transform(im).unsqueeze(0)  # Add a batch dimension
-    
+    st.image(im)
     #@torch.no_grad()
     def evaluate():
         for i in range(128-1):
@@ -66,12 +70,11 @@ if uploaded_file is not None and submit_button :
         bar.progress(percent_complete + 1, text=progress_text)
 
     # Display the uploaded image and its generated caption
-    st.image(im)
     st.write("Generated Caption:")
     result = tokenizer.decode(output[0].tolist(), skip_special_tokens=True)
     st.write(result.capitalize())
-    time.sleep(5)
-    st.success('Congratulations task is done ', icon="✅")
+    time.sleep(2)
+    st.success('Congratulations...!! task is done ', icon="✅")
     st.balloons()
 else:
-  st.error('Error , Plz..... press Compute', icon="🚨")
+  st.error('Error...!!,Plz..... Upload an image' , icon="🚨")
