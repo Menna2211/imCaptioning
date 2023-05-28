@@ -20,6 +20,7 @@ st.title("Image Captioning App")
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 submit_button = st.button("Compute")
 if not submit_button:
+  time.sleep(3)
   st.warning('Please Press Compute....')
   st.stop()
 
@@ -39,8 +40,8 @@ if uploaded_file is not None:
     # Display the uploaded image and its generated caption
     st.write("Generated Caption:")
     st.write(processor.decode(out[0], skip_special_tokens=True))
-    time.sleep(5)
-    st.success('Congratulations task is done ', icon="✅")
+    time.sleep(2)
+    st.success('Congratulations...!! task is done ', icon="✅")
     st.balloons()
 else:
-  st.error('Error!!,Plz..... upload image' , icon="🚨")
+  st.error('Error...!!,Plz..... Upload image' , icon="🚨")
